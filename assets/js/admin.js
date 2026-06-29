@@ -751,18 +751,47 @@ function initAllForms() {
 }
 
 /* ──────────────────────────────────────────────────────────────────
+   LIVE IMAGE PREVIEW
+────────────────────────────────────────────────────────────────── */
+
+function initImagePreviews() {
+  document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      let preview = input.parentElement.querySelector(".img-preview");
+
+      if (!preview) {
+        preview = document.createElement("div");
+        preview.className = "img-preview";
+        preview.innerHTML = "<img>";
+        input.parentElement.appendChild(preview);
+      }
+
+      const img = preview.querySelector("img");
+      img.src = URL.createObjectURL(file);
+      img.onload = () => URL.revokeObjectURL(img.src);
+      img.hidden = false;
+    });
+  });
+}
+
+/* ──────────────────────────────────────────────────────────────────
    BOOT
 ────────────────────────────────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Guard: only run on admin page
-  if (document.body.dataset.page !== 'admin') return;
+document.addEventListener("DOMContentLoaded", () => {
 
-  // Wait for Firebase to be ready
-  if (typeof firebase === 'undefined') {
-    console.error('[admin.js] Firebase SDK not loaded. Check script order in admin.html.');
+  if (document.body.dataset.page !== "admin") return;
+
+  if (typeof firebase === "undefined") {
+    console.error("Firebase SDK not loaded.");
     return;
   }
 
+  initImagePreviews();
+
   initAuth();
+
 });
