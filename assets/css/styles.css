@@ -437,3 +437,101 @@ textarea { min-height: 130px; resize: vertical; }
     padding-bottom: 42px;
   }
 }
+
+/* Deployment polish: compact desktop headings, theme toggle and refined interaction states. */
+body {
+  transition: background-color .25s ease, color .25s ease;
+}
+body[data-theme="dark"] {
+  --ink: #f6efe9;
+  --muted: #cfc2b8;
+  --paper: #12100f;
+  --cream: #1d1916;
+  --rose: #f0b7a3;
+  --jade: #9bd8c8;
+  --line: rgba(255, 255, 255, .14);
+  --shadow: 0 18px 50px rgba(0, 0, 0, .32);
+}
+h1 { font-size: clamp(2.8rem, 8vw, 6.4rem); }
+h2 { font-size: clamp(2rem, 4.4vw, 3.7rem); }
+h3 { font-size: clamp(1.25rem, 2.4vw, 1.75rem); }
+.page-hero h1 { max-width: 980px; }
+.theme-toggle {
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn, .theme-toggle, .nav-links a, .product-card, .gallery-item, .insta-tile, .quote-card, .post-card, .admin-panel, .float-btn {
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.btn:hover, .theme-toggle:hover, .float-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(23, 23, 23, .16);
+}
+.product-card:hover, .gallery-item:hover, .insta-tile:hover, .quote-card:hover, .post-card:hover, .admin-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(23, 23, 23, .12);
+}
+.product-card:hover img, .gallery-item:hover img, .insta-tile:hover img {
+  transform: scale(1.025);
+}
+.product-card img, .gallery-item img, .insta-tile img {
+  transition: transform .35s ease;
+}
+body[data-theme="dark"] .site-nav {
+  background: rgba(18, 16, 15, .9);
+}
+body[data-theme="dark"] .nav-links,
+body[data-theme="dark"] .product-card,
+body[data-theme="dark"] .quote-card,
+body[data-theme="dark"] .post-card,
+body[data-theme="dark"] .policy-block,
+body[data-theme="dark"] .admin-panel,
+body[data-theme="dark"] .admin-toolbar,
+body[data-theme="dark"] input,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select {
+  background: #1a1715;
+  color: var(--ink);
+}
+body[data-theme="dark"] .brand::before,
+body[data-theme="dark"] .nav-toggle,
+body[data-theme="dark"] .theme-toggle,
+body[data-theme="dark"] .gallery-item figcaption,
+body[data-theme="dark"] .insta-tile span {
+  background-color: #211d1a;
+  color: var(--ink);
+}
+body[data-theme="dark"] .btn {
+  background: var(--ink);
+  color: #12100f;
+  border-color: var(--ink);
+}
+body[data-theme="dark"] .btn.secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+body[data-theme="dark"] .site-footer,
+body[data-theme="dark"] .hero {
+  background: #0d0b0a;
+}
+body[data-theme="dark"] .page-hero {
+  background: linear-gradient(135deg, #1d1916, #142521);
+}
+@media (min-width: 840px) {
+  .nav-links { gap: 5px; }
+  .nav-links a { padding: 9px 9px; }
+}
+@media (max-width: 640px) {
+  h1 { font-size: clamp(2.5rem, 16vw, 4.8rem); }
+  h2 { font-size: clamp(1.8rem, 10vw, 3rem); }
+  .theme-toggle { width: 100%; justify-content: center; }
+}

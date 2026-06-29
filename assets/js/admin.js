@@ -15,12 +15,16 @@
   }
 
   function cloudinaryEnabled() {
-    const cfg = window.PLAVA_CLOUDINARY || {};
+    const cfg = window.PLAVA_CLOUDINARY || window.CLOUDINARY || {};
     return Boolean(cfg.cloudName && cfg.uploadPreset && !String(cfg.cloudName).startsWith("PASTE_") && !String(cfg.uploadPreset).startsWith("PASTE_"));
   }
 
   function isAuthed() {
     return firebaseEnabled() && Boolean(window.PlavaFirebase.auth.currentUser);
+  }
+
+  function setStatus(node, message) {
+    if (node) node.textContent = message || "";
   }
 
   function setAuthView() {
@@ -34,17 +38,8 @@
     }
   }
 
-  function fileToDataUrl(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   async function uploadToCloudinary(file) {
-    const cfg = window.PLAVA_CLOUDINARY || {};
+    const cfg = window.PLAVA_CLOUDINARY || window.CLOUDINARY || {};
     const body = new FormData();
     body.append("file", file);
     body.append("upload_preset", cfg.uploadPreset);
@@ -66,7 +61,7 @@
 
   async function saveData(statusNode, message) {
     await window.PlavaStore.save(data);
-    if (statusNode) statusNode.textContent = message;
+    setStatus(statusNode, message);
   }
 
   function renderLists() {
@@ -77,7 +72,7 @@
           <img src="${item.image}" alt="">
           <strong>${item.name}</strong>
           <span>${item.price}</span>
-          <button class="btn secondary" type="button" data-delete-product="${index}">Delete</button>
+          <button class="btn secondary" type="button" data-delete-product="${index}">Remove</button>
         </div>`).join("");
     }
     const instagramList = document.querySelector("[data-instagram-list]");
@@ -87,9 +82,9 @@
         <div class="admin-row">
           <img src="${item.image}" alt="">
           <strong>${item.title}</strong>
-          <span>${item.fileUrl ? "File upload" : "Instagram upload"}</span>
-          <button class="btn secondary" type="button" data-delete-instagram="${index}">Delete</button>
-        </div>`).join("") : "<p>No Instagram uploads yet.</p>";
+          <span>${item.source === "instagram" ? "Synced Instagram post" : item.fileUrl ? "Cloudinary upload" : "Social tile"}</span>
+          <button class="btn secondary" type="button" data-delete-instagram="${index}">Remove</button>
+        </div>`).join("") : "<p>No social tiles yet.</p>";
     }
     const enquiryList = document.querySelector("[data-enquiry-list]");
     if (enquiryList) {
@@ -122,7 +117,7 @@
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const fd = new FormData(loginForm);
-      loginStatus.textContent = "Signing in...";
+      setStatus(loginStatus, "Signing in...");
       try {
         if (!firebaseEnabled()) throw new Error("Firebase is not configured. Add your Firebase web config first.");
         const credential = await window.PlavaFirebase.signIn(fd.get("email"), fd.get("password"));
@@ -131,13 +126,13 @@
           throw new Error("This Firebase account is not allowed to manage Plava.");
         }
         loginForm.reset();
-        loginStatus.textContent = "";
+        setStatus(loginStatus, "");
         data = await window.PlavaStore.load();
         fillForms();
         renderLists();
         setAuthView();
       } catch (error) {
-        loginStatus.textContent = error.message || "Invalid admin email or password.";
+        setStatus(loginStatus, error.message || "Invalid admin email or password.");
       }
     });
   }
@@ -145,28 +140,39 @@
   if (settingsForm) {
     settingsForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const fd = new FormData(settingsForm);
-      data.brand = { ...data.brand, ...Object.fromEntries(fd.entries()) };
-      await saveData(null, "");
-      location.reload();
+      const status = settingsForm.querySelector(".form-status") || document.querySelector("[data-settings-status]");
+      try {
+        const fd = new FormData(settingsForm);
+        data.brand = { ...data.brand, ...Object.fromEntries(fd.entries()) };
+        await saveData(status, "Settings saved.");
+        setTimeout(() => location.reload(), 400);
+      } catch (error) {
+        setStatus(status, error.message || "Could not save settings.");
+      }
     });
   }
 
   if (contentForm) {
     contentForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const fd = new FormData(contentForm);
-      const heroFile = fd.get("heroImage");
-      const uploadedHero = heroFile && heroFile.size ? await uploadFile(heroFile) : data.hero.image;
-      data.hero = {
-        ...data.hero,
-        eyebrow: fd.get("heroEyebrow"),
-        title: fd.get("heroTitle"),
-        text: fd.get("heroText"),
-        image: uploadedHero
-      };
-      data.features = String(fd.get("features") || "").split("\n").map((item) => item.trim()).filter(Boolean);
-      await saveData(document.querySelector("[data-content-status]"), "Content saved to Firebase.");
+      const status = document.querySelector("[data-content-status]");
+      setStatus(status, "Saving content...");
+      try {
+        const fd = new FormData(contentForm);
+        const heroFile = fd.get("heroImage");
+        const uploadedHero = heroFile && heroFile.size ? await uploadFile(heroFile) : data.hero.image;
+        data.hero = {
+          ...data.hero,
+          eyebrow: fd.get("heroEyebrow"),
+          title: fd.get("heroTitle"),
+          text: fd.get("heroText"),
+          image: uploadedHero
+        };
+        data.features = String(fd.get("features") || "").split("\n").map((item) => item.trim()).filter(Boolean);
+        await saveData(status, "Content saved to Firebase.");
+      } catch (error) {
+        setStatus(status, error.message || "Could not save content.");
+      }
     });
   }
 
@@ -174,36 +180,40 @@
     adminForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.querySelector("[data-admin-status]");
-      status.textContent = "Uploading...";
-      const fd = new FormData(adminForm);
-      const type = fd.get("type");
-      const file = fd.get("image");
-      const uploadedUrl = file && file.size ? await uploadFile(file) : "assets/images/gallery-detail.svg";
-      if (type === "products") {
-        data.products.unshift({
-          id: crypto.randomUUID(),
-          name: fd.get("name"),
-          price: fd.get("meta") || "Price on request",
-          image: uploadedUrl,
-          description: fd.get("description") || "New boutique collection item.",
-          tags: ["New", "Boutique", "Plava"]
-        });
-      } else if (type === "instagram") {
-        data.instagramUploads.unshift({
-          title: fd.get("name") || "Instagram upload",
-          image: uploadedUrl,
-          fileUrl: uploadedUrl
-        });
-      } else {
-        data.gallery.unshift({
-          title: fd.get("name"),
-          category: fd.get("meta") || "Gallery",
-          image: uploadedUrl
-        });
+      setStatus(status, "Uploading...");
+      try {
+        const fd = new FormData(adminForm);
+        const type = fd.get("type");
+        const file = fd.get("image");
+        const uploadedUrl = file && file.size ? await uploadFile(file) : "assets/images/gallery-detail.svg";
+        if (type === "products") {
+          data.products.unshift({
+            id: crypto.randomUUID(),
+            name: fd.get("name"),
+            price: fd.get("meta") || "Price on request",
+            image: uploadedUrl,
+            description: fd.get("description") || "New boutique collection item.",
+            tags: ["New", "Boutique", "Plava"]
+          });
+        } else if (type === "instagram") {
+          data.instagramUploads.unshift({
+            title: fd.get("name") || "Social tile",
+            image: uploadedUrl,
+            fileUrl: uploadedUrl
+          });
+        } else {
+          data.gallery.unshift({
+            title: fd.get("name"),
+            category: fd.get("meta") || "Gallery",
+            image: uploadedUrl
+          });
+        }
+        await saveData(status, "Published. Public pages will load the update automatically.");
+        adminForm.reset();
+        renderLists();
+      } catch (error) {
+        setStatus(status, error.message || "Could not publish item.");
       }
-      await saveData(status, "Saved to Firebase. Public pages will load the update automatically.");
-      adminForm.reset();
-      renderLists();
     });
   }
 
@@ -263,5 +273,3 @@
 
   init();
 })();
-
-

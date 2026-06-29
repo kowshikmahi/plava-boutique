@@ -16,9 +16,22 @@
 
   firebase.initializeApp(config);
   const db = firebase.firestore();
+  try {
+    db.settings({ experimentalAutoDetectLongPolling: true, useFetchStreams: false });
+  } catch (error) {
+    console.warn("Firestore transport settings were already applied.", error);
+  }
   const auth = firebase.auth();
   const docRef = db.doc(options.siteDocPath || "sites/plava");
   const localStore = window.PlavaStore;
+
+  function getFriendlyError(error) {
+    const message = error && error.message ? error.message : "";
+    if (message.includes("ERR_BLOCKED_BY_CLIENT") || message.includes("blocked")) {
+      return "Firestore was blocked by the browser or an extension. Allow firestore.googleapis.com or test in a clean browser profile.";
+    }
+    return message || "Firebase request failed.";
+  }
 
   async function loadRemoteData() {
     const snapshot = await docRef.get();
@@ -31,7 +44,7 @@
   }
 
   async function saveRemoteData(data) {
-    await docRef.set(JSON.parse(JSON.stringify(data)));
+    await docRef.set(JSON.parse(JSON.stringify(data)), { merge: true });
     localStorage.setItem(localStore.key, JSON.stringify(data));
   }
 
@@ -40,6 +53,7 @@
     auth,
     db,
     adminEmail: options.adminEmail,
+    getFriendlyError,
     signIn(email, password) {
       return auth.signInWithEmailAndPassword(email, password);
     },
@@ -69,12 +83,13 @@
       } catch (error) {
         console.warn("Firebase save failed, saving locally.", error);
         await localStore.save(data);
-        throw error;
+        throw new Error(getFriendlyError(error));
       }
     },
     async reset() {
       const defaults = window.PlavaData.merge();
       await saveRemoteData(defaults);
+      localStorage.setItem(this.key, JSON.stringify(defaults));
     }
   };
 })();

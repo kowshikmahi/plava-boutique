@@ -5,49 +5,49 @@
     instagram: "plava_in",
     whatsapp: "7358963118",
     email: "hello@plava.in",
-    address: "Boutique studio, Tamil Nadu, India",
-    tagline: "Anti-gravity elegance for modern womenswear.",
-    seoDescription: "Plava is a boutique womenswear shop for daywear, occasionwear and curated collections with WhatsApp enquiries and Instagram updates."
+    address: "Madurai boutique studio, Tamil Nadu, India",
+    tagline: "Boutique sarees, dresses and occasionwear styled with quiet elegance.",
+    seoDescription: "Plava is a boutique womenswear studio for sarees, dresses, kurti sets and occasionwear, with WhatsApp enquiries, Instagram updates and curated styling."
   },
   hero: {
-    eyebrow: "@plava_in · Madurai boutique",
-    title: "Plava",
-    text: "Anti-gravity elegance for modern womenswear.",
+    eyebrow: "Madurai boutique | Sarees, dresses and occasionwear",
+    title: "Boutique Sarees & Dresses",
+    text: "Elegant drapes, soft festive sets and ready-to-style pieces selected for modern celebrations, workdays and slow weekends.",
     image: "assets/images/hero-plava.svg"
   },
   features: [
-    "Floating WhatsApp chat for instant product and size questions.",
-    "Instagram uploads projected on the website through editable admin tiles.",
-    "SEO-ready page structure, metadata, sitemap and responsive images.",
-    "Admin panel for products, photos, content and customer enquiries."
+    "Fresh saree, dress and kurti edits can be published from the admin studio.",
+    "Cloudinary keeps uploaded product photos and files fast, shareable and deployment friendly.",
+    "Firebase keeps admin login and website content protected behind the Plava owner account.",
+    "Instagram and social tiles can be published manually from the content studio."
   ],
   banners: [
     {
-      title: "New Season Edit",
-      text: "Soft tailoring, graceful drapes and boutique-ready silhouettes curated for everyday occasion dressing.",
+      title: "New Season Boutique Edit",
+      text: "Soft silks, graceful drapes and feminine occasionwear curated for intimate celebrations and everyday polish.",
       image: "assets/images/hero-plava.svg"
     }
   ],
   products: [
-    { id: "daywear", name: "Daywear Edit", price: "From Rs. 1,499", image: "assets/images/collection-daywear.svg", description: "Breathable pieces for work, brunch and daily movement.", tags: ["Cotton blends", "Pastels", "Ready to style"] },
-    { id: "evening", name: "Evening Poise", price: "From Rs. 2,999", image: "assets/images/collection-evening.svg", description: "Elegant silhouettes for celebrations, dinners and festive evenings.", tags: ["Draped", "Statement", "Limited"] },
-    { id: "occasion", name: "Occasion Bloom", price: "From Rs. 3,499", image: "assets/images/collection-occasion.svg", description: "Polished boutique looks for events, gifting and special days.", tags: ["Festive", "Custom fit", "Premium"] }
+    { id: "saree-edit", name: "Signature Saree Edit", price: "From Rs. 2,499", image: "assets/images/collection-occasion.svg", description: "Flowing sarees with refined borders, subtle sheen and blouse styling support for festive days.", tags: ["Sarees", "Festive", "Drape styling"] },
+    { id: "dress-edit", name: "Boutique Dress Edit", price: "From Rs. 1,899", image: "assets/images/collection-evening.svg", description: "Midi dresses and occasion silhouettes chosen for comfort, movement and understated charm.", tags: ["Dresses", "Occasion", "Easy fit"] },
+    { id: "kurti-edit", name: "Kurti & Co-ord Sets", price: "From Rs. 1,499", image: "assets/images/collection-daywear.svg", description: "Soft cottons and dressy co-ords for office, brunch, gifting and repeat wear.", tags: ["Kurtis", "Co-ords", "Daily elegance"] }
   ],
   gallery: [
-    { title: "Studio Rack", image: "assets/images/gallery-detail.svg", category: "Shop" },
-    { title: "Daywear Edit", image: "assets/images/collection-daywear.svg", category: "Collection" },
-    { title: "Evening Poise", image: "assets/images/collection-evening.svg", category: "Collection" },
-    { title: "Occasion Bloom", image: "assets/images/collection-occasion.svg", category: "Collection" }
+    { title: "Silk drape details", image: "assets/images/collection-occasion.svg", category: "Saree" },
+    { title: "Evening dress edit", image: "assets/images/collection-evening.svg", category: "Dress" },
+    { title: "Soft daywear rack", image: "assets/images/collection-daywear.svg", category: "Kurti" },
+    { title: "Boutique styling corner", image: "assets/images/gallery-detail.svg", category: "Studio" }
   ],
   instagramUploads: [],
   testimonials: [
-    { name: "Aaradhya", quote: "The collection feels premium without being loud. The WhatsApp ordering flow was quick and personal.", city: "Chennai" },
-    { name: "Meera", quote: "Loved the fit suggestions and the way the team helped me pick an occasion look.", city: "Coimbatore" },
-    { name: "Nisha", quote: "Plava has a soft, elegant style that works beautifully for office and events.", city: "Bengaluru" }
+    { name: "Styling note", quote: "Choose one statement drape, one everyday set and one soft dress to build a wardrobe that moves between work and celebration.", city: "Plava Studio" },
+    { name: "Fit note", quote: "Our edits focus on graceful movement, comfortable cuts and pieces that can be styled up or down.", city: "Plava Studio" },
+    { name: "Care note", quote: "Delicate fabrics are selected with wearability in mind, so each piece feels special without feeling difficult.", city: "Plava Studio" }
   ],
   posts: [
-    { title: "How to build a capsule occasion wardrobe", date: "2026-06-20", excerpt: "Start with one polished neutral, one soft statement piece and accessories that can move between day and evening." },
-    { title: "New arrivals now available on WhatsApp", date: "2026-06-12", excerpt: "Send a screenshot from the gallery and the team will share size, fabric and availability details." }
+    { title: "How to choose a saree for intimate celebrations", date: "2026-06-20", excerpt: "Look for graceful fall, a border that frames the drape and a blouse shade that lets the fabric breathe." },
+    { title: "The boutique dress edit for warm evenings", date: "2026-06-12", excerpt: "Soft structure, breathable fabric and a single polished accessory can make an evening look feel effortless." }
   ],
   enquiries: []
 };
@@ -90,3 +90,4 @@ window.PlavaStore = {
     localStorage.removeItem(this.key);
   }
 };
+

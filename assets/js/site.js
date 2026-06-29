@@ -1,11 +1,28 @@
 ﻿(function () {
   const page = document.body.dataset.page || "home";
   let data = window.PlavaData.merge();
+  const THEME_KEY = "plava-theme";
 
   function setText(selector, value) {
     document.querySelectorAll(selector).forEach((node) => {
       node.textContent = value || "";
     });
+  }
+
+  function setTheme(theme) {
+    const nextTheme = theme === "dark" ? "dark" : "light";
+    document.body.dataset.theme = nextTheme;
+    localStorage.setItem(THEME_KEY, nextTheme);
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.textContent = nextTheme === "dark" ? "Light" : "Dark";
+      button.setAttribute("aria-label", `Switch to ${nextTheme === "dark" ? "light" : "dark"} mode`);
+    });
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(saved || (prefersDark ? "dark" : "light"));
   }
 
   function getLinks() {
@@ -37,6 +54,7 @@
         <div class="nav-links">
           ${links.map(([href, label]) => `<a href="${href}" ${location.pathname.endsWith(href) || (href === "index.html" && page === "home") ? 'aria-current="page"' : ""}>${label}</a>`).join("")}
           <a class="admin-link" href="admin.html">Admin</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
         </div>`;
       const toggle = nav.querySelector(".nav-toggle");
       const linksEl = nav.querySelector(".nav-links");
@@ -44,6 +62,10 @@
         const open = linksEl.classList.toggle("open");
         toggle.setAttribute("aria-expanded", String(open));
       });
+      nav.querySelector("[data-theme-toggle]").addEventListener("click", () => {
+        setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+      });
+      setTheme(localStorage.getItem(THEME_KEY) || document.body.dataset.theme || "light");
     }
 
     const footer = document.querySelector("[data-footer]");
@@ -135,11 +157,14 @@
     const { instagramUrl } = getLinks();
     document.querySelectorAll("[data-instagram-feed]").forEach((wrap) => {
       const items = (data.instagramUploads && data.instagramUploads.length ? data.instagramUploads : data.gallery).slice(0, 8);
-      wrap.innerHTML = items.map((item) => `
-        <a class="insta-tile" href="${instagramUrl}" target="_blank" rel="noopener">
-          <img src="${item.image}" alt="${item.title}" loading="lazy">
-          <span>@${data.brand.instagram}</span>
-        </a>`).join("");
+      wrap.innerHTML = items.map((item) => {
+        const href = item.permalink || instagramUrl;
+        return `
+          <a class="insta-tile" href="${href}" target="_blank" rel="noopener">
+            <img src="${item.image}" alt="${item.title || "Plava Instagram post"}" loading="lazy">
+            <span>@${data.brand.instagram}</span>
+          </a>`;
+      }).join("");
     });
   }
 
@@ -163,17 +188,23 @@
         message: formData.get("message"),
         date: new Date().toISOString()
       };
-      data.enquiries = [enquiry, ...(data.enquiries || [])];
-      await window.PlavaStore.save(data);
-      const text = `Hi Plava, I am ${enquiry.name}. ${enquiry.message} Phone: ${enquiry.phone} Email: ${enquiry.email}`;
-      window.open(`${waBase}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
-      form.reset();
-      const status = document.querySelector("[data-form-status]");
-      if (status) status.textContent = "Enquiry saved and WhatsApp opened.";
+      try {
+        data.enquiries = [enquiry, ...(data.enquiries || [])];
+        await window.PlavaStore.save(data);
+        const text = `Hi Plava, I am ${enquiry.name}. ${enquiry.message} Phone: ${enquiry.phone} Email: ${enquiry.email}`;
+        window.open(`${waBase}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+        form.reset();
+        const status = document.querySelector("[data-form-status]");
+        if (status) status.textContent = "Enquiry saved and WhatsApp opened.";
+      } catch (error) {
+        const status = document.querySelector("[data-form-status]");
+        if (status) status.textContent = error.message || "Could not save enquiry. Please try again.";
+      }
     });
   }
 
   async function init() {
+    initTheme();
     data = await window.PlavaStore.load();
     document.title = document.title.replace("Plava", data.brand.name);
     const description = document.querySelector('meta[name="description"]');

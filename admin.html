@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Admin Panel | Plava</title>
+  <title>Content Studio | Plava</title>
   <link rel="icon" href="assets/images/plava-logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +15,9 @@
   <nav class="site-nav" data-nav></nav>
   <main>
     <section class="page-hero compact-admin-hero">
-      <p class="eyebrow">Admin Panel</p>
-      <h1>Update Plava Without Coding</h1>
-      <p>Manage products, gallery images, Instagram uploads, hero content and enquiries with Firebase admin login and Cloudinary uploads.</p>
+      <p class="eyebrow">Content Studio</p>
+      <h1>Manage Plava Content</h1>
+      <p>Publish boutique products, social tiles, hero copy and enquiries with Firebase admin login and Cloudinary uploads.</p>
     </section>
     <section class="section admin-login" data-login-panel>
       <div class="admin-panel login-card">
@@ -37,28 +37,28 @@
         <button class="btn secondary" type="button" data-logout>Logout</button>
       </div>
       <div class="admin-panel">
-        <h2>Product / Gallery / Instagram</h2>
+        <h2>Add Boutique Content</h2>
         <form data-admin-form>
           <label>Type
-            <select name="type"><option value="products">Product</option><option value="gallery">Gallery</option><option value="instagram">Instagram Upload</option></select>
+            <select name="type"><option value="products">Product</option><option value="gallery">Gallery</option><option value="instagram">Instagram / Social Tile</option></select>
           </label>
           <label>Name / Title <input name="name" required></label>
           <label>Price / Category <input name="meta" placeholder="From Rs. 1,499 or Collection"></label>
           <label>Description <textarea name="description"></textarea></label>
           <label>Image / File <input name="image" type="file" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"></label>
-          <button class="btn" type="submit">Save Item</button>
+          <button class="btn" type="submit">Publish Item</button>
           <p class="form-status" data-admin-status></p>
         </form>
       </div>
       <div class="admin-panel">
-        <h2>Home Content</h2>
+        <h2>Homepage Content</h2>
         <form data-content-form>
           <label>Hero Eyebrow <input name="heroEyebrow"></label>
           <label>Hero Title <input name="heroTitle"></label>
           <label>Hero Text <textarea name="heroText"></textarea></label>
-          <label>Feature Lines <textarea name="features"></textarea></label>
+          <label>Boutique Highlights <textarea name="features"></textarea></label>
           <label>Hero Image <input name="heroImage" type="file" accept="image/*"></label>
-          <button class="btn" type="submit">Save Content</button>
+          <button class="btn" type="submit">Save Homepage</button>
           <p class="form-status" data-content-status></p>
         </form>
       </div>
@@ -70,7 +70,8 @@
           <label>Address <textarea name="address"></textarea></label>
           <label>WhatsApp Number <input name="whatsapp"></label>
           <label>Instagram Handle <input name="instagram"></label>
-          <button class="btn" type="submit">Update Settings</button>
+          <button class="btn" type="submit">Save Settings</button>
+          <p class="form-status" data-settings-status></p>
         </form>
       </div>
       <div class="admin-panel">
@@ -78,7 +79,7 @@
         <div class="admin-list" data-product-list></div>
       </div>
       <div class="admin-panel">
-        <h2>Instagram Uploads</h2>
+        <h2>Instagram / Social Tiles</h2>
         <div class="admin-list" data-instagram-list></div>
       </div>
       <div class="admin-panel">
@@ -86,10 +87,10 @@
         <div class="admin-list" data-enquiry-list></div>
       </div>
       <div class="admin-panel">
-        <h2>Backup</h2>
+        <h2>Content Backup</h2>
         <div class="actions">
-          <button class="btn" type="button" data-export>Export JSON</button>
-          <button class="btn secondary" type="button" data-reset>Reset Demo Data</button>
+          <button class="btn" type="button" data-export>Download Content Backup</button>
+          <button class="btn secondary" type="button" data-reset>Restore Boutique Defaults</button>
         </div>
       </div>
     </section>
@@ -107,5 +108,8 @@
   <script src="assets/js/admin.js"></script>
 </body>
 </html>
+
+
+
 
 
