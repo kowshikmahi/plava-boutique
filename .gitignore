@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+
+# Backup files
+*.bak

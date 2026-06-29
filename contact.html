@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contact Plava boutique through WhatsApp, Instagram, email or enquiry form.">
+  <title>Contact | Plava</title>
+  <link rel="icon" href="assets/images/plava-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="contact">
+  <nav class="site-nav" data-nav></nav>
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Contact</p>
+      <h1>Tell Plava what you are looking for.</h1>
+      <p>Submit an enquiry, open WhatsApp instantly, or follow the newest shop updates on Instagram.</p>
+    </section>
+    <section class="section contact-wrap">
+      <form class="admin-panel" data-contact-form>
+        <label>Name <input name="name" autocomplete="name" required></label>
+        <label>Mobile <input name="phone" autocomplete="tel" required></label>
+        <label>Email <input name="email" type="email" autocomplete="email"></label>
+        <label>Message <textarea name="message" required placeholder="Tell us the collection or product you liked."></textarea></label>
+        <button class="btn" type="submit">Send Enquiry</button>
+        <p class="form-status" data-form-status></p>
+      </form>
+      <div class="admin-panel">
+        <p class="eyebrow">Details</p>
+        <h2>Visit, message or follow.</h2>
+        <ul class="feature-list">
+          <li>WhatsApp: <span data-brand-phone></span></li>
+          <li>Email: <span data-brand-email></span></li>
+          <li>Instagram: @plava_in</li>
+          <li>Address: <span data-brand-address></span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" data-footer></footer>
+  <div class="floating-social" data-floating></div>
+  <script src="assets/js/data.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/cloudinary-config.js"></script>
+  <script src="assets/js/firebase-store.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
+

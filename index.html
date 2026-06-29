@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Plava boutique womenswear collections, gallery, Instagram and WhatsApp enquiries.">
+  <meta property="og:title" content="Plava | Boutique Womenswear">
+  <meta property="og:description" content="Anti-gravity elegance for modern womenswear.">
+  <meta property="og:image" content="assets/images/plava-logo.jpg">
+  <title>Plava | Boutique Womenswear</title>
+  <link rel="icon" href="assets/images/plava-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="home">
+  <nav class="site-nav" data-nav></nav>
+  <main>
+    <section class="hero">
+      <div class="hero-media">
+        <img src="assets/images/hero-plava.svg" alt="Plava boutique womenswear editorial scene">
+        <canvas id="gravity-scene" aria-hidden="true"></canvas>
+      </div>
+      <div class="hero-content">
+        <p class="eyebrow" data-hero-eyebrow>@plava_in · Madurai boutique</p>
+        <h1 data-hero-title>Plava</h1>
+        <p data-hero-text>Anti-gravity elegance for modern womenswear.</p>
+        <div class="actions">
+          <a class="btn" href="collections.html">View Collections</a>
+          <a class="btn secondary" href="https://wa.me/917358963118" target="_blank" rel="noopener">WhatsApp Enquiry</a>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <p class="eyebrow">Collections</p>
+        <h2>Curated pieces with a boutique eye.</h2>
+        <p>Explore daywear, evening silhouettes and occasion-ready edits that feel graceful, modern and personal.</p>
+      </div>
+      <div class="grid product-grid" data-products></div>
+    </section>
+    <section class="section alt feature-band">
+      <div>
+        <p class="eyebrow">Experience</p>
+        <h2>Mobile-first, fast and made for enquiries.</h2>
+      </div>
+      <ul class="feature-list" data-features></ul>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <p class="eyebrow">Gallery</p>
+        <h2>Shop moments and collection details.</h2>
+      </div>
+      <div class="grid gallery-grid" data-gallery></div>
+    </section>
+    <section class="section alt">
+      <div class="section-head">
+        <p class="eyebrow">Instagram</p>
+        <h2>Follow the latest edit.</h2>
+      </div>
+      <div class="grid instagram-grid" data-instagram-feed></div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <p class="eyebrow">Updates</p>
+        <h2>From the Plava journal.</h2>
+      </div>
+      <div class="grid post-grid" data-posts></div>
+    </section>
+  </main>
+  <footer class="site-footer" data-footer></footer>
+  <div class="floating-social" data-floating></div>
+  <script src="assets/js/data.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/cloudinary-config.js"></script>
+  <script src="assets/js/firebase-store.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/gravity.js"></script>
+</body>
+</html>
+
+
+
