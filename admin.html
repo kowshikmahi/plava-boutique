@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/admin-studio.css">
 </head>
 <body data-page="admin">
   <nav class="site-nav" data-nav></nav>
@@ -19,14 +20,14 @@
     <section class="page-hero compact-admin-hero">
       <p class="eyebrow">Content Studio</p>
       <h1>Manage Plava Content</h1>
-      <p>Edit every section of your website — hero, products, gallery, testimonials, Instagram, about, and contact — all from one place.</p>
+      <p>Edit every section of your website — hero, products, gallery, testimonials, Instagram, blog, about, and contact — all from one place.</p>
     </section>
 
     <!-- ── LOGIN ── -->
     <section class="section admin-login" data-login-panel>
       <div class="admin-panel login-card">
         <div class="panel-header">
-          <span class="panel-icon"></span>
+          <span class="panel-icon">🔐</span>
           <h2>Admin Login</h2>
         </div>
         <form data-login-form autocomplete="off">
@@ -44,7 +45,6 @@
     ══════════════════════════════════════════ -->
     <section class="section admin-studio" data-admin-area hidden>
 
-      <!-- Toolbar -->
       <div class="studio-toolbar">
         <div class="toolbar-left">
           <span class="toolbar-dot"></span>
@@ -56,13 +56,13 @@
         </div>
       </div>
 
-      <!-- Section jump nav -->
       <nav class="studio-nav" aria-label="Jump to section">
         <a href="#section-hero">Hero</a>
         <a href="#section-products">Products</a>
         <a href="#section-gallery">Gallery</a>
         <a href="#section-testimonials">Testimonials</a>
         <a href="#section-instagram">Instagram</a>
+        <a href="#section-blog">Blog</a>
         <a href="#section-about">About</a>
         <a href="#section-contact">Contact</a>
         <a href="#section-settings">Settings</a>
@@ -70,176 +70,131 @@
         <a href="#section-backup">Backup</a>
       </nav>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 1. HERO SECTION                 -->
-      <!-- ─────────────────────────────── -->
+      <!-- 1. HERO -->
       <div class="studio-panel" id="section-hero">
         <div class="panel-header">
           <span class="panel-icon">🏠</span>
-          <div>
-            <h2>Hero Section</h2>
-            <p class="panel-desc">Homepage hero — eyebrow label, headline, subtext and background image.</p>
-          </div>
+          <div><h2>Hero Section</h2><p class="panel-desc">Homepage hero — eyebrow label, headline, subtext and background image.</p></div>
         </div>
         <form data-content-form class="studio-form">
           <div class="form-grid two-col">
-            <label>Eyebrow Label
-              <input name="heroEyebrow" placeholder="e.g. Welcome to Plava">
-            </label>
-            <label>Hero Title
-              <input name="heroTitle" placeholder="e.g. Boutique Wellness">
-            </label>
+            <label>Eyebrow Label <input name="heroEyebrow" placeholder="e.g. Welcome to Plava"></label>
+            <label>Hero Title <input name="heroTitle" placeholder="e.g. Boutique Wellness"></label>
           </div>
-          <label>Hero Subtitle / Body Text
-            <textarea name="heroText" placeholder="The short paragraph below your main headline…"></textarea>
-          </label>
-          <label>CTA Button Label
-            <input name="heroCta" placeholder="e.g. Explore Collection">
-          </label>
+          <label>Hero Subtitle / Body Text <textarea name="heroText" placeholder="The short paragraph below your main headline…"></textarea></label>
+          <label>CTA Button Label <input name="heroCta" placeholder="e.g. Explore Collection"></label>
           <div class="form-grid two-col">
             <label>Hero Background Image
-              <div class="upload-box" data-upload-for="heroImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="heroImage" data-max-mb="8">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">JPG/PNG/WebP, up to 8MB</span>
                 <input name="heroImage" type="file" accept="image/*">
               </div>
+              <p class="field-hint">Recommended size: 1920×1080px</p>
             </label>
-            <label>Current Hero Image Preview
-              <div class="img-preview" data-preview="heroImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Current Hero Image Preview<div class="img-preview" data-preview="heroImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
-          <div class="form-actions">
-            <button class="btn" type="submit">Save Hero Content</button>
-            <p class="form-status" data-content-status></p>
-          </div>
+          <div class="form-actions"><button class="btn" type="submit">Save Hero Content</button><p class="form-status" data-content-status></p></div>
         </form>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 2. PRODUCTS                     -->
-      <!-- ─────────────────────────────── -->
+      <!-- 2. PRODUCTS -->
       <div class="studio-panel" id="section-products">
         <div class="panel-header">
           <span class="panel-icon">🛍️</span>
-          <div>
-            <h2>Products</h2>
-            <p class="panel-desc">Add boutique products with name, price, description and product image.</p>
-          </div>
+          <div><h2>Products</h2><p class="panel-desc">Add boutique products with name, price, description and image. Max 50 items.</p></div>
+          <div class="panel-header-actions"><span class="limit-badge" data-limit="products">0 / 50</span></div>
         </div>
-        <form data-product-form class="studio-form">
+        <form data-product-form class="studio-form" data-section="products">
+          <input type="hidden" name="editId">
           <div class="form-grid two-col">
-            <label>Product Name
-              <input name="name" required placeholder="e.g. Silk Eye Mask">
-            </label>
-            <label>Price
-              <input name="meta" placeholder="e.g. From Rs. 1,499">
-            </label>
+            <label>Product Name <input name="name" required placeholder="e.g. Silk Eye Mask"></label>
+            <label>Price <input name="meta" placeholder="e.g. From Rs. 1,499"></label>
           </div>
-          <label>Description
-            <textarea name="description" placeholder="Short product description…"></textarea>
-          </label>
-          <label>Collection / Category
-            <input name="category" placeholder="e.g. Sleep Essentials">
-          </label>
+          <label>Description <textarea name="description" placeholder="Short product description…"></textarea></label>
+          <label>Collection / Category <input name="category" placeholder="e.g. Sleep Essentials"></label>
           <div class="form-grid two-col">
             <label>Product Image
-              <div class="upload-box" data-upload-for="productImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="productImage" data-max-mb="5">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">JPG/PNG/WebP, up to 5MB</span>
                 <input name="image" type="file" accept="image/*">
               </div>
             </label>
-            <label>Image Preview
-              <div class="img-preview" data-preview="productImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Image Preview<div class="img-preview" data-preview="productImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
           <div class="form-actions">
-            <button class="btn" type="submit">Add Product</button>
+            <button class="btn" type="submit" data-submit-label="Add Product">Add Product</button>
+            <button class="btn secondary" type="button" data-cancel-edit hidden>Cancel Edit</button>
             <p class="form-status" data-product-status></p>
           </div>
         </form>
-        <div class="panel-list-head">
-          <h3>Current Products</h3>
-          <span class="item-count" data-count="products">0 items</span>
+        <div class="panel-list-head"><h3>Current Products</h3><span class="item-count" data-count="products">0 items</span></div>
+        <div class="list-toolbar">
+          <div class="search-box"><input type="search" placeholder="Search products…" data-search="products"></div>
+          <select class="filter-select" data-filter="products"><option value="">All categories</option></select>
+        </div>
+        <div class="select-all-row"><label><input type="checkbox" data-select-all="products"> Select all</label></div>
+        <div class="bulk-bar" data-bulk-bar="products" hidden>
+          <span><span data-bulk-count="products">0</span> selected</span>
+          <div class="bulk-bar-actions"><button class="btn-icon danger" type="button" data-bulk-delete="products" title="Delete selected">🗑️ Delete</button></div>
         </div>
         <div class="studio-list" data-product-list></div>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 3. GALLERY                      -->
-      <!-- ─────────────────────────────── -->
+      <!-- 3. GALLERY -->
       <div class="studio-panel" id="section-gallery">
         <div class="panel-header">
           <span class="panel-icon">🖼️</span>
-          <div>
-            <h2>Gallery</h2>
-            <p class="panel-desc">Manage the visual gallery — add images with title and category label.</p>
-          </div>
+          <div><h2>Gallery</h2><p class="panel-desc">Manage the visual gallery — image with title and category label. Max 50 items.</p></div>
+          <div class="panel-header-actions"><span class="limit-badge" data-limit="gallery">0 / 50</span></div>
         </div>
-        <form data-gallery-form class="studio-form">
+        <form data-gallery-form class="studio-form" data-section="gallery">
+          <input type="hidden" name="editId">
           <div class="form-grid two-col">
-            <label>Image Title
-              <input name="name" required placeholder="e.g. The Retreat Room">
-            </label>
-            <label>Category / Label
-              <input name="category" placeholder="e.g. Interiors">
-            </label>
+            <label>Image Title <input name="name" required placeholder="e.g. The Retreat Room"></label>
+            <label>Category / Label <input name="category" placeholder="e.g. Interiors"></label>
           </div>
-          <label>Caption (optional)
-            <input name="caption" placeholder="Short caption shown on hover…">
-          </label>
+          <label>Caption (optional) <input name="caption" placeholder="Short caption shown on hover…"></label>
           <div class="form-grid two-col">
             <label>Gallery Image
-              <div class="upload-box" data-upload-for="galleryImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="galleryImage" data-max-mb="5">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">JPG/PNG/WebP, up to 5MB</span>
                 <input name="image" type="file" accept="image/*">
               </div>
             </label>
-            <label>Image Preview
-              <div class="img-preview" data-preview="galleryImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Image Preview<div class="img-preview" data-preview="galleryImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
           <div class="form-actions">
-            <button class="btn" type="submit">Add to Gallery</button>
+            <button class="btn" type="submit" data-submit-label="Add to Gallery">Add to Gallery</button>
+            <button class="btn secondary" type="button" data-cancel-edit hidden>Cancel Edit</button>
             <p class="form-status" data-gallery-status></p>
           </div>
         </form>
-        <div class="panel-list-head">
-          <h3>Gallery Items</h3>
-          <span class="item-count" data-count="gallery">0 items</span>
+        <div class="panel-list-head"><h3>Gallery Items</h3><span class="item-count" data-count="gallery">0 items</span></div>
+        <div class="list-toolbar">
+          <div class="search-box"><input type="search" placeholder="Search gallery…" data-search="gallery"></div>
+          <select class="filter-select" data-filter="gallery"><option value="">All categories</option></select>
+        </div>
+        <div class="select-all-row"><label><input type="checkbox" data-select-all="gallery"> Select all</label></div>
+        <div class="bulk-bar" data-bulk-bar="gallery" hidden>
+          <span><span data-bulk-count="gallery">0</span> selected</span>
+          <div class="bulk-bar-actions"><button class="btn-icon danger" type="button" data-bulk-delete="gallery" title="Delete selected">🗑️ Delete</button></div>
         </div>
         <div class="studio-list studio-grid-list" data-gallery-list></div>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 4. TESTIMONIALS                 -->
-      <!-- ─────────────────────────────── -->
+      <!-- 4. TESTIMONIALS -->
       <div class="studio-panel" id="section-testimonials">
         <div class="panel-header">
           <span class="panel-icon">💬</span>
-          <div>
-            <h2>Testimonials</h2>
-            <p class="panel-desc">Add customer quotes, reviewer name, role and optional photo.</p>
-          </div>
+          <div><h2>Testimonials</h2><p class="panel-desc">Add customer quotes, name, role and optional photo. Max 50 items.</p></div>
+          <div class="panel-header-actions"><span class="limit-badge" data-limit="testimonials">0 / 50</span></div>
         </div>
-        <form data-testimonial-form class="studio-form">
-          <label>Quote / Review Text
-            <textarea name="quote" required placeholder="What the customer said…"></textarea>
-          </label>
+        <form data-testimonial-form class="studio-form" data-section="testimonials">
+          <input type="hidden" name="editId">
+          <label>Quote / Review Text <textarea name="quote" required placeholder="What the customer said…"></textarea></label>
           <div class="form-grid three-col">
-            <label>Reviewer Name
-              <input name="author" required placeholder="e.g. Priya S.">
-            </label>
-            <label>Role / Location
-              <input name="role" placeholder="e.g. Mumbai">
-            </label>
+            <label>Reviewer Name <input name="author" required placeholder="e.g. Priya S."></label>
+            <label>Role / Location <input name="role" placeholder="e.g. Mumbai"></label>
             <label>Star Rating
               <select name="rating">
                 <option value="5">★★★★★ (5)</option>
@@ -250,271 +205,223 @@
           </div>
           <div class="form-grid two-col">
             <label>Reviewer Photo (optional)
-              <div class="upload-box" data-upload-for="testimonialPhoto">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="testimonialPhoto" data-max-mb="3">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">Up to 3MB</span>
                 <input name="photo" type="file" accept="image/*">
               </div>
             </label>
-            <label>Photo Preview
-              <div class="img-preview img-preview--round" data-preview="testimonialPhoto">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No photo selected</span>
-              </div>
-            </label>
+            <label>Photo Preview<div class="img-preview img-preview--round" data-preview="testimonialPhoto"><img src="" alt="" hidden><span class="preview-placeholder">No photo selected</span></div></label>
           </div>
           <div class="form-actions">
-            <button class="btn" type="submit">Add Testimonial</button>
+            <button class="btn" type="submit" data-submit-label="Add Testimonial">Add Testimonial</button>
+            <button class="btn secondary" type="button" data-cancel-edit hidden>Cancel Edit</button>
             <p class="form-status" data-testimonial-status></p>
           </div>
         </form>
-        <div class="panel-list-head">
-          <h3>Current Testimonials</h3>
-          <span class="item-count" data-count="testimonials">0 items</span>
+        <div class="panel-list-head"><h3>Current Testimonials</h3><span class="item-count" data-count="testimonials">0 items</span></div>
+        <div class="list-toolbar">
+          <div class="search-box"><input type="search" placeholder="Search testimonials…" data-search="testimonials"></div>
+          <select class="filter-select" data-filter="testimonials">
+            <option value="">All ratings</option><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option>
+          </select>
+        </div>
+        <div class="select-all-row"><label><input type="checkbox" data-select-all="testimonials"> Select all</label></div>
+        <div class="bulk-bar" data-bulk-bar="testimonials" hidden>
+          <span><span data-bulk-count="testimonials">0</span> selected</span>
+          <div class="bulk-bar-actions"><button class="btn-icon danger" type="button" data-bulk-delete="testimonials" title="Delete selected">🗑️ Delete</button></div>
         </div>
         <div class="studio-list" data-testimonial-list></div>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 5. INSTAGRAM POSTS              -->
-      <!-- ─────────────────────────────── -->
+      <!-- 5. INSTAGRAM -->
       <div class="studio-panel" id="section-instagram">
         <div class="panel-header">
           <span class="panel-icon">📸</span>
-          <div>
-            <h2>Instagram / Social Tiles</h2>
-            <p class="panel-desc">Manage social feed tiles shown on the homepage — image, caption and post link.</p>
-          </div>
+          <div><h2>Instagram / Social Tiles</h2><p class="panel-desc">Manage social feed tiles shown on the homepage. Max 50 items.</p></div>
+          <div class="panel-header-actions"><span class="limit-badge" data-limit="instagram">0 / 50</span></div>
         </div>
-        <form data-instagram-form class="studio-form">
+        <form data-instagram-form class="studio-form" data-section="instagram">
+          <input type="hidden" name="editId">
           <div class="form-grid two-col">
-            <label>Post Caption
-              <input name="caption" placeholder="e.g. Morning ritual ✨">
-            </label>
-            <label>Instagram Post URL
-              <input name="url" type="url" placeholder="https://instagram.com/p/…">
-            </label>
+            <label>Post Caption <input name="caption" placeholder="e.g. Morning ritual ✨"></label>
+            <label>Instagram Post URL <input name="url" type="url" placeholder="https://instagram.com/p/…"></label>
           </div>
-          <label>Hashtags / Tags
-            <input name="tags" placeholder="e.g. #plava #wellness #selfcare">
-          </label>
+          <label>Hashtags / Tags <input name="tags" placeholder="e.g. #plava #wellness #selfcare"></label>
           <div class="form-grid two-col">
             <label>Post Image
-              <div class="upload-box" data-upload-for="instaImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="instaImage" data-max-mb="5">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">Up to 5MB</span>
                 <input name="image" type="file" accept="image/*">
               </div>
             </label>
-            <label>Image Preview
-              <div class="img-preview img-preview--square" data-preview="instaImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Image Preview<div class="img-preview img-preview--square" data-preview="instaImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
           <div class="form-actions">
-            <button class="btn" type="submit">Add Instagram Post</button>
+            <button class="btn" type="submit" data-submit-label="Add Instagram Post">Add Instagram Post</button>
+            <button class="btn secondary" type="button" data-cancel-edit hidden>Cancel Edit</button>
             <p class="form-status" data-instagram-status></p>
           </div>
         </form>
-        <div class="panel-list-head">
-          <h3>Instagram Tiles</h3>
-          <span class="item-count" data-count="instagram">0 items</span>
+        <div class="panel-list-head"><h3>Instagram Tiles</h3><span class="item-count" data-count="instagram">0 items</span></div>
+        <div class="list-toolbar"><div class="search-box"><input type="search" placeholder="Search posts…" data-search="instagram"></div></div>
+        <div class="select-all-row"><label><input type="checkbox" data-select-all="instagram"> Select all</label></div>
+        <div class="bulk-bar" data-bulk-bar="instagram" hidden>
+          <span><span data-bulk-count="instagram">0</span> selected</span>
+          <div class="bulk-bar-actions"><button class="btn-icon danger" type="button" data-bulk-delete="instagram" title="Delete selected">🗑️ Delete</button></div>
         </div>
         <div class="studio-list studio-insta-list" data-instagram-list></div>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 6. ABOUT SECTION                -->
-      <!-- ─────────────────────────────── -->
+      <!-- 6. BLOG -->
+      <div class="studio-panel" id="section-blog">
+        <div class="panel-header">
+          <span class="panel-icon">📝</span>
+          <div><h2>Blog Posts</h2><p class="panel-desc">Write and manage blog articles with cover image. Max 50 posts.</p></div>
+          <div class="panel-header-actions"><span class="limit-badge" data-limit="blog">0 / 50</span></div>
+        </div>
+        <form data-blog-form class="studio-form" data-section="blog">
+          <input type="hidden" name="editId">
+          <div class="form-grid two-col">
+            <label>Post Title <input name="title" required placeholder="e.g. 5 Styling Tips for Festive Sarees"></label>
+            <label>Category <input name="category" placeholder="e.g. Styling Tips"></label>
+          </div>
+          <label>Short Excerpt <textarea name="excerpt" placeholder="One or two lines shown in the blog list…"></textarea></label>
+          <label>Full Content <textarea name="content" placeholder="Full article body…" style="min-height:200px"></textarea></label>
+          <div class="form-grid two-col">
+            <label>Cover Image
+              <div class="upload-box" data-upload-for="blogImage" data-max-mb="5">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">Up to 5MB</span>
+                <input name="image" type="file" accept="image/*">
+              </div>
+            </label>
+            <label>Image Preview<div class="img-preview" data-preview="blogImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit" data-submit-label="Publish Post">Publish Post</button>
+            <button class="btn secondary" type="button" data-cancel-edit hidden>Cancel Edit</button>
+            <p class="form-status" data-blog-status></p>
+          </div>
+        </form>
+        <div class="panel-list-head"><h3>Published Posts</h3><span class="item-count" data-count="blog">0 items</span></div>
+        <div class="list-toolbar">
+          <div class="search-box"><input type="search" placeholder="Search posts…" data-search="blog"></div>
+          <select class="filter-select" data-filter="blog"><option value="">All categories</option></select>
+        </div>
+        <div class="select-all-row"><label><input type="checkbox" data-select-all="blog"> Select all</label></div>
+        <div class="bulk-bar" data-bulk-bar="blog" hidden>
+          <span><span data-bulk-count="blog">0</span> selected</span>
+          <div class="bulk-bar-actions"><button class="btn-icon danger" type="button" data-bulk-delete="blog" title="Delete selected">🗑️ Delete</button></div>
+        </div>
+        <div class="studio-list" data-blog-list></div>
+      </div>
+
+      <!-- 7. ABOUT -->
       <div class="studio-panel" id="section-about">
         <div class="panel-header">
           <span class="panel-icon">🌿</span>
-          <div>
-            <h2>About Section</h2>
-            <p class="panel-desc">Edit the about/story section — headline, body text, feature highlights and image.</p>
-          </div>
+          <div><h2>About Section</h2><p class="panel-desc">Edit the about/story section — headline, body text, feature highlights and image.</p></div>
         </div>
         <form data-about-form class="studio-form">
           <div class="form-grid two-col">
-            <label>Section Eyebrow
-              <input name="aboutEyebrow" placeholder="e.g. Our Story">
-            </label>
-            <label>Section Headline
-              <input name="aboutTitle" placeholder="e.g. Born from a love of stillness">
-            </label>
+            <label>Section Eyebrow <input name="aboutEyebrow" placeholder="e.g. Our Story"></label>
+            <label>Section Headline <input name="aboutTitle" placeholder="e.g. Born from a love of stillness"></label>
           </div>
-          <label>Body Text (paragraph 1)
-            <textarea name="aboutText1" placeholder="First paragraph of your about story…"></textarea>
-          </label>
-          <label>Body Text (paragraph 2, optional)
-            <textarea name="aboutText2" placeholder="Second paragraph…"></textarea>
-          </label>
-          <label>Boutique Highlights / Feature List
-            <textarea name="features" placeholder="One highlight per line, e.g:&#10;Handcrafted in India&#10;Sustainably sourced&#10;Women-led studio"></textarea>
-          </label>
+          <label>Body Text (paragraph 1) <textarea name="aboutText1" placeholder="First paragraph of your about story…"></textarea></label>
+          <label>Body Text (paragraph 2, optional) <textarea name="aboutText2" placeholder="Second paragraph…"></textarea></label>
+          <label>Boutique Highlights / Feature List <textarea name="features" placeholder="One highlight per line, e.g:&#10;Handcrafted in India&#10;Sustainably sourced&#10;Women-led studio"></textarea></label>
           <div class="form-grid two-col">
             <label>About / Feature Image
-              <div class="upload-box" data-upload-for="aboutImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="aboutImage" data-max-mb="6">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">Up to 6MB</span>
                 <input name="aboutImage" type="file" accept="image/*">
               </div>
             </label>
-            <label>Image Preview
-              <div class="img-preview" data-preview="aboutImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Image Preview<div class="img-preview" data-preview="aboutImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
-          <div class="form-actions">
-            <button class="btn" type="submit">Save About Content</button>
-            <p class="form-status" data-about-status></p>
-          </div>
+          <div class="form-actions"><button class="btn" type="submit">Save About Content</button><p class="form-status" data-about-status></p></div>
         </form>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 7. CONTACT SECTION              -->
-      <!-- ─────────────────────────────── -->
+      <!-- 8. CONTACT -->
       <div class="studio-panel" id="section-contact">
         <div class="panel-header">
           <span class="panel-icon">📬</span>
-          <div>
-            <h2>Contact Section</h2>
-            <p class="panel-desc">Edit the contact page headline, supporting text, map embed and contact details.</p>
-          </div>
+          <div><h2>Contact Section</h2><p class="panel-desc">Edit the contact page headline, supporting text, map embed and contact details.</p></div>
         </div>
         <form data-contact-section-form class="studio-form">
           <div class="form-grid two-col">
-            <label>Section Eyebrow
-              <input name="contactEyebrow" placeholder="e.g. Get in Touch">
-            </label>
-            <label>Section Headline
-              <input name="contactTitle" placeholder="e.g. We'd love to hear from you">
-            </label>
+            <label>Section Eyebrow <input name="contactEyebrow" placeholder="e.g. Get in Touch"></label>
+            <label>Section Headline <input name="contactTitle" placeholder="e.g. We'd love to hear from you"></label>
           </div>
-          <label>Intro Paragraph
-            <textarea name="contactIntro" placeholder="Short paragraph above the contact form…"></textarea>
-          </label>
+          <label>Intro Paragraph <textarea name="contactIntro" placeholder="Short paragraph above the contact form…"></textarea></label>
           <div class="form-grid two-col">
-            <label>Email Address
-              <input name="contactEmail" type="email" placeholder="hello@plava.in">
-            </label>
-            <label>Phone / WhatsApp Number
-              <input name="contactPhone" placeholder="+91 98XXX XXXXX">
-            </label>
+            <label>Email Address <input name="contactEmail" type="email" placeholder="hello@plava.in"></label>
+            <label>Phone / WhatsApp Number <input name="contactPhone" placeholder="+91 98XXX XXXXX"></label>
           </div>
-          <label>Physical Address
-            <textarea name="contactAddress" placeholder="Studio address shown on the contact page…"></textarea>
-          </label>
-          <label>Google Maps Embed URL
-            <input name="mapEmbed" placeholder="https://maps.google.com/maps?…">
-          </label>
+          <label>Physical Address <textarea name="contactAddress" placeholder="Studio address shown on the contact page…"></textarea></label>
+          <label>Google Maps Embed URL <input name="mapEmbed" placeholder="https://maps.google.com/maps?…"></label>
           <div class="form-grid two-col">
             <label>Contact Page Image (optional)
-              <div class="upload-box" data-upload-for="contactImage">
-                <span>Click to choose image or drag here</span>
+              <div class="upload-box" data-upload-for="contactImage" data-max-mb="6">
+                <span class="upload-icon">📤</span><span>Click to choose image or drag here</span><span class="upload-sub">Up to 6MB</span>
                 <input name="contactImage" type="file" accept="image/*">
               </div>
             </label>
-            <label>Image Preview
-              <div class="img-preview" data-preview="contactImage">
-                <img src="" alt="" hidden>
-                <span class="preview-placeholder">No image selected</span>
-              </div>
-            </label>
+            <label>Image Preview<div class="img-preview" data-preview="contactImage"><img src="" alt="" hidden><span class="preview-placeholder">No image selected</span></div></label>
           </div>
-          <div class="form-actions">
-            <button class="btn" type="submit">Save Contact Content</button>
-            <p class="form-status" data-contact-section-status></p>
-          </div>
+          <div class="form-actions"><button class="btn" type="submit">Save Contact Content</button><p class="form-status" data-contact-section-status></p></div>
         </form>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 8. SITE SETTINGS                -->
-      <!-- ─────────────────────────────── -->
+      <!-- 9. SETTINGS -->
       <div class="studio-panel" id="section-settings">
         <div class="panel-header">
           <span class="panel-icon">⚙️</span>
-          <div>
-            <h2>Site Settings</h2>
-            <p class="panel-desc">Global settings — brand tagline, social handles, and site-wide contact details.</p>
-          </div>
+          <div><h2>Site Settings</h2><p class="panel-desc">Global settings — brand tagline, social handles, and site-wide contact details.</p></div>
         </div>
         <form data-settings-form class="studio-form">
           <div class="form-grid two-col">
-            <label>Brand Tagline
-              <input name="tagline" placeholder="e.g. Boutique Wellness, Curated for You">
-            </label>
-            <label>Contact Email
-              <input name="email" type="email" placeholder="hello@plava.in">
-            </label>
+            <label>Brand Tagline <input name="tagline" placeholder="e.g. Boutique Wellness, Curated for You"></label>
+            <label>Contact Email <input name="email" type="email" placeholder="hello@plava.in"></label>
           </div>
-          <label>Business Address
-            <textarea name="address" placeholder="Full address for footer and contact page…"></textarea>
-          </label>
+          <label>Business Address <textarea name="address" placeholder="Full address for footer and contact page…"></textarea></label>
           <div class="form-grid two-col">
-            <label>WhatsApp Number (with country code)
-              <input name="whatsapp" placeholder="+91 98XXX XXXXX">
-            </label>
-            <label>Instagram Handle
-              <input name="instagram" placeholder="@plava.official">
-            </label>
+            <label>WhatsApp Number (with country code) <input name="whatsapp" placeholder="+91 98XXX XXXXX"></label>
+            <label>Instagram Handle <input name="instagram" placeholder="@plava.official"></label>
           </div>
           <div class="form-grid two-col">
-            <label>Facebook URL
-              <input name="facebook" type="url" placeholder="https://facebook.com/…">
-            </label>
-            <label>Pinterest URL
-              <input name="pinterest" type="url" placeholder="https://pinterest.com/…">
-            </label>
+            <label>Facebook URL <input name="facebook" type="url" placeholder="https://facebook.com/…"></label>
+            <label>Pinterest URL <input name="pinterest" type="url" placeholder="https://pinterest.com/…"></label>
           </div>
-          <label>Footer Copyright Text
-            <input name="copyright" placeholder="e.g. © 2025 Plava. All rights reserved.">
-          </label>
-          <div class="form-actions">
-            <button class="btn" type="submit">Save Settings</button>
-            <p class="form-status" data-settings-status></p>
-          </div>
+          <label>Footer Copyright Text <input name="copyright" placeholder="e.g. © 2025 Plava. All rights reserved."></label>
+          <div class="form-actions"><button class="btn" type="submit">Save Settings</button><p class="form-status" data-settings-status></p></div>
         </form>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 9. CUSTOMER ENQUIRIES           -->
-      <!-- ─────────────────────────────── -->
+      <!-- 10. ENQUIRIES -->
       <div class="studio-panel" id="section-enquiries">
         <div class="panel-header">
           <span class="panel-icon">📋</span>
-          <div>
-            <h2>Customer Enquiries</h2>
-            <p class="panel-desc">All messages submitted via the contact form on your site.</p>
-          </div>
+          <div><h2>Customer Enquiries</h2><p class="panel-desc">All messages submitted via the contact form on your site.</p></div>
         </div>
         <div class="enquiry-toolbar">
+          <div class="search-box" style="flex:1"><input type="search" placeholder="Search enquiries…" data-search="enquiries"></div>
           <span class="item-count" data-count="enquiries">0 enquiries</span>
           <button class="btn secondary small" type="button" data-export-enquiries>Export CSV</button>
         </div>
-        <div class="studio-list" data-enquiry-list>
-          <p class="empty-state">No enquiries yet. Messages submitted via the contact form will appear here.</p>
-        </div>
+        <div class="studio-list" data-enquiry-list><p class="empty-state">No enquiries yet. Messages submitted via the contact form will appear here.</p></div>
       </div>
 
-      <!-- ─────────────────────────────── -->
-      <!-- 10. BACKUP & RESTORE            -->
-      <!-- ─────────────────────────────── -->
+      <!-- 11. BACKUP -->
       <div class="studio-panel" id="section-backup">
         <div class="panel-header">
           <span class="panel-icon">💾</span>
-          <div>
-            <h2>Backup &amp; Restore</h2>
-            <p class="panel-desc">Download a full JSON backup of all content, or restore boutique defaults.</p>
-          </div>
+          <div><h2>Backup &amp; Restore</h2><p class="panel-desc">Download a full JSON backup of all content, or restore boutique defaults.</p></div>
         </div>
         <div class="backup-grid">
           <div class="backup-card">
             <h3>Download Backup</h3>
-            <p>Export all products, gallery, testimonials, Instagram posts, and site settings as a single JSON file.</p>
+            <p>Export all products, gallery, testimonials, Instagram posts, blog posts, and site settings as a single JSON file.</p>
             <button class="btn" type="button" data-export>Download Content Backup</button>
           </div>
           <div class="backup-card backup-card--danger">
@@ -528,6 +435,19 @@
     </section><!-- /admin-studio -->
   </main>
 
+  <!-- Shared edit modal -->
+  <div class="modal-overlay" data-edit-modal hidden>
+    <div class="modal-card">
+      <div class="panel-header">
+        <div><h2 data-modal-title>Edit Item</h2></div>
+        <button class="modal-close" type="button" data-modal-close>✕</button>
+      </div>
+      <div data-modal-body></div>
+    </div>
+  </div>
+
+  <div class="toast-stack" data-toast-stack></div>
+
   <footer class="site-footer" data-footer></footer>
   <div class="floating-social" data-floating></div>
 
@@ -540,52 +460,5 @@
   <script src="assets/js/firebase-store.js"></script>
   <script src="assets/js/site.js"></script>
   <script src="assets/js/admin.js"></script>
-
-  <script>
-    /* ── Upload box: live image preview ── */
-    document.querySelectorAll('.upload-box').forEach(box => {
-      const input = box.querySelector('input[type="file"]');
-      const previewKey = box.dataset.uploadFor;
-      const preview = document.querySelector(`[data-preview="${previewKey}"]`);
-      if (!input || !preview) return;
-      const img = preview.querySelector('img');
-      const placeholder = preview.querySelector('.preview-placeholder');
-      input.addEventListener('change', () => {
-        const file = input.files[0];
-        if (!file) return;
-        const url = URL.createObjectURL(file);
-        img.src = url;
-        img.hidden = false;
-        if (placeholder) placeholder.hidden = true;
-      });
-      box.addEventListener('click', () => input.click());
-      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('drag-over'); });
-      box.addEventListener('dragleave', () => box.classList.remove('drag-over'));
-      box.addEventListener('drop', e => {
-        e.preventDefault();
-        box.classList.remove('drag-over');
-        const file = e.dataTransfer.files[0];
-        if (!file) return;
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        input.files = dt.files;
-        input.dispatchEvent(new Event('change'));
-      });
-    });
-
-    /* ── Studio nav: highlight active section on scroll ── */
-    const navLinks = document.querySelectorAll('.studio-nav a');
-    const panels = document.querySelectorAll('.studio-panel[id]');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(a => a.classList.remove('active'));
-          const link = document.querySelector(`.studio-nav a[href="#${entry.target.id}"]`);
-          if (link) link.classList.add('active');
-        }
-      });
-    }, { threshold: 0.25 });
-    panels.forEach(p => observer.observe(p));
-  </script>
 </body>
 </html>
